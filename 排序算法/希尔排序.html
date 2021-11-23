@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      /*
+            希尔排序的核心理念与插入排序不同，它会首先比较距离较远的元素，而非相邻的元素。
+            和简单地比较相邻元素相比，使用这种方案可以使离正确位置很远的元素更快地回到合适
+            的位置。当开始用这个算法遍历数据集时，所有元素之间的距离会不断减小，直到处理到
+            数据集的末尾，这时算法比较的就是相邻元素了。
+
+            希尔排序的工作原理是，通过定义一个间隔序列来表示在排序过程中进行比较的元素之
+            间有多远的间隔
+
+
+            由于多次插入排序，我们知道一次插入排序是稳定的，不会改变相同元素的相对顺序，
+            但在不同的插入排序过程中，相同的元素可能在各自的插入排序中移动，最后其稳定性就会被打乱，
+
+            所以shell排序是不稳定的。对于排序算法，所谓的不稳定指的就是相同元素在排序过程中被移动
+
+            希尔排序的时间复杂度是：O（nlogn）～O（n2）
+
+            说排序算法是 稳定 如果具有相等键的两个对象在排序输出中出现的顺序与它们在要排序的输入数组中出现的顺序相同。
+            一些排序算法本质上是稳定的，如插入排序，合并排序，冒泡排序等。并且一些排序算法不是，如堆排序，快速排序等。
+
+        */
+      var arr = [];
+      for (var ii = 0; ii < 10; ii++)   {
+        arr.push(Math.floor(Math.random() * 100));
+      }
+      //   //增量每一次变为之前的一半
+      var num = [5, 3, 1];
+      for (var a = 0; a < num.length; a++) {
+        //根据增量进行分组j
+        //从i开始是因为是从前面进行比较插入排序
+        for (var j = num[a]; j < arr.length; j++) {
+          //然后在同组元素中进行交换插入排序
+          var temp = arr[j];
+          for (
+            var k = j;
+            k >= num[a] && arr[k - num[a]] > temp;
+            k = k - num[a]
+          ) {
+            arr[k] = arr[k - num[a]];
+          }
+          arr[k] = temp;
+        }
+      }
+      var str = "";
+      arr.map((item) => {
+        str = str + " " + item;
+      });
+      console.log(str);
+    </script>
+  </body>
+</html>

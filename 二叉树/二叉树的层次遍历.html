@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+
+<body>
+	<script>
+		/*
+			给你一个二叉树，请你返回其按 层序遍历 得到的节点值。 
+			（即逐层地，从左到右访问所有节点）。
+
+			示例：
+			二叉树：[3,9,20,null,null,15,7],
+
+			3
+			/ \
+			9  20
+			/  \
+			15   7
+		*/
+		function Node(data, left, right) {
+			this.data = data;
+			this.left = left;
+			this.right = right;
+		}
+		var nums = [3, 9, 20, null, null, 15, 7];
+		var root = new Node(nums[0], null, null);
+		var queue = [root];
+		var count = 1;
+		//通过数组构造二叉树
+		while (queue.length && count < nums.length) {
+			var temp = [];
+			for (var i = 0; i < queue.length; i++) {
+				if (nums[count]) {
+					queue[i].left = new Node(nums[count], null, null);
+					temp.push(queue[i].left);
+				}
+				count++;
+				if (count == nums.length) break;
+				if (nums[count]) {
+					queue[i].right = new Node(nums[count], null, null);
+					temp.push(queue[i].right);
+				}
+				count++;
+				if (count == nums.length) break;
+			}
+			queue = temp;
+		}
+		console.log(root);
+		var levelOrder = function (root) {
+			if (!root) return [];
+			var res = [[root.data]];
+			var temp = [];
+			var queue = [root];
+			while (queue.length) {
+				temp = [];
+				for (var i = 0; i < queue.length; i++) {
+					if (queue[i].left) temp.push(queue[i].left);
+					if (queue[i].right) temp.push(queue[i].right);
+				}
+				temp.length && res.push(temp.map(item => item.data))
+				queue = temp;
+			}
+			return res;
+		};
+		console.log(levelOrder(root));
+	</script>
+</body>
+
+</html>

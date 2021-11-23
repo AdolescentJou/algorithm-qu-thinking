@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+
+<body>
+	<script>
+		/*
+			假如楼梯有n个台阶，每次可以走1个或2个台阶，请问走完这n个台阶有几种走法(动态规划实现)
+		*/
+		let dp = new Map();
+		dp.set(1, 2).set(2, 2);
+		function climbStairs(n) {
+			if (dp.has(n)) {
+				return dp.get(n);
+			}
+			if (n === 1) return 1;
+			if (n === 2) return 2;
+			let result = climbStairs(n - 1) + climbStairs(n - 2);
+			dp.set(n, result);
+			return result;
+		}
+		console.log(climbStairs(3));
+		console.log(climbStairs(5));
+	</script>
+</body>
+
+</html>

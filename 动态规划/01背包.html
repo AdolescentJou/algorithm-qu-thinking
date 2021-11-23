@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+
+<body>
+	<script>
+		/*
+			有一个载重量是10kg 的背包，有五个物品，a 2kg 6元，b 2kg 3元，c 6kg 5元，d 5kg 4元，e 4kg 6元。
+			问怎么放物品，价值最高？
+
+			状态方程描述为 f[i][j]= Math.max(f[i-1][j],f[i-1][j]-c[i]]+w[i]
+		*/
+
+		function getMaxValueByBag(values, weights, W) {
+			var n = weights.length - 1;
+			var f = [[]];
+			//先考虑只放第一个物品的情况
+			for (var j = 0; j <= W; j++) {
+				if (j < weights[0]) {
+					f[0][j] = 0
+				} else {
+					f[0][j] = values[0];
+				}
+			}
+
+			for (var i = 0; i <= W; i++) {
+				for (var j = 1; j < weights.length; j++) {
+					if (!f[j]) {
+						f[j] = [];
+					}
+					if (i < weights[j]) {
+						//装不下则等于之前的最优值
+						f[j][i] = f[j - 1][i]
+					} else {
+						f[j][i] = Math.max(f[j - 1][i], f[j - 1][i - weights[j]] + values[j])
+					}
+				}
+			}
+			return f;
+		}
+		console.log(getMaxValueByBag([6,3,5,4,6],[2,2,6,5,4],10));
+	</script>
+</body>
+
+</html>

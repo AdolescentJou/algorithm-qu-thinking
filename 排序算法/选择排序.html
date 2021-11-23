@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      /*
+            选择排序从数组的开头开始，将第一个元素和其他元素进行比较。
+            检查完所有元素后，最小的元素会被放到数组的第一个位置，然后算法会从第二个位置继续。
+            这个过程一直进行，当进行到数组的倒数第二个位置时，所有的数据便完成了排序。
+
+            时间复杂度 n*n
+
+            选择排序不是一个稳定的排序算法
+        */
+      var arr = [];
+      for (var ii = 0; ii <= 10; ii++) {
+        arr.push(Math.floor(Math.random() * 100));
+      }
+      for (var i = 0; i <= 10; i++) {
+        var min = i;
+        for (var j = i + 1; j <= 10; j++) {
+          if (arr[min] < arr[j]) {
+            min = j;
+          }
+        }
+        [arr[i], arr[min]] = [arr[min], arr[i]];
+      }
+      var str = "";
+      arr.map((item) => {
+        str = str + " " + item;
+      });
+      console.log(str);
+    </script>
+  </body>
+</html>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        /*
+            时间复杂度 n*n
+            冒泡排序是稳定的排序算法
+        */    
+
+        var arr = [];
+        for(var i = 0 ; i <= 50 ; i ++){
+            //随机生成数据
+            var count = Math.floor(Math.random()*100);
+            arr.push(count);
+        }
+
+        for(var i = 0 ; i <= 50 ; i++){
+            for(var j = i+1 ; j <=50 ; j++){
+                if(arr[i] > arr[j]){
+                    //ES6结构方式交换数据
+                    [arr[i],arr[j]] = [arr[j],arr[i]];
+                }
+            }
+        }
+
+        arr.map(item => {
+            console.log(item);
+        })
+    </script>
+</body>
+</html>

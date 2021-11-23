@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        /*
+            快速排序是处理大数据集最快的排序算法之一。它是一种分而治之的算法，通过递归的方
+            式将数据依次分解为包含较小元素和较大元素的不同子序列。该算法不断重复这个步骤直
+            到所有数据都是有序的。
+            这个算法首先要在列表中选择一个元素作为基准值（pivot）。数据排序围绕基准值进行，
+            将列表中小于基准值的元素移到数组的底部，将大于基准值的元素移到数组的顶部。
+
+            快速排序是不稳定排序
+            时间复杂度最好 N*logN  最坏:N*N
+
+            说排序算法是 稳定 如果具有相等键的两个对象在排序输出中出现的顺序与它们在要排序的输入数组中出现的顺序相同。
+            一些排序算法本质上是稳定的，如插入排序，合并排序，冒泡排序等。并且一些排序算法不是，如堆排序，快速排序等。
+        */
+        function quikeSort(arr){
+            if(arr.length == 0){
+                return [];
+            }
+            var minArr=[],maxArr=[];
+            var middle=arr[0];
+            for(var i = 1 ;i < arr.length ;i++){
+                if(arr[i]<middle){
+                    minArr.push(arr[i]);
+                }else{
+                    maxArr.push(arr[i]);
+                }
+            }
+            return quikeSort(minArr).concat(middle,quikeSort(maxArr));
+        }
+        var arr = [];
+        for (var ii = 0; ii < 10; ii++) {
+            arr.push(Math.floor(Math.random() * 100));
+        }
+        console.log(quikeSort(arr));
+        
+
+
+
+    </script>
+</body>
+</html>

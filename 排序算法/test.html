@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+
+<body>
+	<script>
+		//快速排序
+		// function quickSort(arr) {
+		// 	if (arr.length == 0) {
+		// 		return [];
+		// 	}
+		// 	let middle = arr[0];
+		// 	let minArr = [];
+		// 	let maxArr = [];
+		// 	for (let i = 1; i < arr.length; i++) {
+		// 		if (arr[i] < middle) {
+		// 			minArr.push(arr[i]);
+		// 		} else {
+		// 			maxArr.push(arr[i]);
+		// 		}
+		// 	}
+		// 	return quickSort(minArr).concat(middle, quickSort(maxArr));
+		// }
+		// console.log(quickSort([12,5,8,23,88,0,23,1265,77,5]));
+
+		//插入排序
+		// function insertSort(arr) {
+		// 	for (let i = 0; i < arr.length; i++) {
+		// 		let j = i;
+		// 		let temp = arr[i]
+		// 		while (j > 0 && (arr[j - 1] < temp)) {
+		// 			arr[j] = arr[j - 1];
+		// 			j--;
+		// 		}
+		// 		arr[j] = temp;
+		// 	}
+		// 	return arr;
+
+		// }
+		// console.log(insertSort([12, 8, 23, 88, 0, 23, 1265, 77, 5]));
+
+		//希尔排序
+		// function hillSort(arr) {
+		// 	var num = [5, 3, 1];
+		// 	for (let i = 0; i < num.length; i++) {
+		// 		for (let j = num[i]; j < arr.length; j++) {
+		// 			let temp = arr[j];
+		// 			for (var k = j;
+		// 				k >= num[i] && arr[k - num[i]] > temp;
+		// 				k = k - num[i]) {
+		// 				arr[k] = arr[k - num[i]];
+		// 			}
+		// 			arr[k] = temp;
+		// 		}
+		// 	}
+		// 	return arr;
+		// }
+		// var arr = [];
+		// for (var ii = 0; ii < 10; ii++) {
+		// 	arr.push(Math.floor(Math.random() * 100));
+		// }
+		// console.log(hillSort(arr));
+
+		//选择排序
+		// function selectSort(arr) {
+		// 	for (var i = 0; i < arr.length; i++) {
+		// 		for (var j = i + 1; j < arr.length; j++) {
+		// 			if (arr[i] > arr[j]) {
+		// 				[arr[i], arr[j]] = [arr[j], arr[i]];
+		// 			}
+		// 		}
+		// 	}
+		// 	return arr;
+		// }
+		// var arr = [];
+		// for (var ii = 0; ii < 10; ii++) {
+		// 	arr.push(Math.floor(Math.random() * 100));
+		// }
+		// console.log(selectSort(arr));
+
+
+		//归并排序
+		function mergeSort(arr) {
+			let len = arr.length;
+			if (len < 2) {
+				return arr;
+			}
+			let middle = Math.floor(len / 2);
+			let leftArr = arr.slice(0, middle);
+			let rightArr = arr.slice(middle, arr.length);
+			return merge(mergeSort(leftArr), mergeSort(rightArr));
+		}
+		function merge(left, right) {
+			let result = [];
+			while (left.length && right.length) {
+				if (left[0] > right[0]) {
+					result.push(right.shift());
+				} else {
+					result.push(left.shift());
+				}
+			}
+			while (left.length) result.push(left.shift());
+			while (right.length) result.push(right.shift());
+			return result;
+		}
+		var arr = [];
+		for (var ii = 0; ii < 10; ii++) {
+			arr.push(Math.floor(Math.random() * 100));
+		}
+		console.log(mergeSort(arr))
+	</script>
+</body>
+
+</html>

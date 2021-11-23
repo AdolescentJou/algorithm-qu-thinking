@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+
+<body>
+	<script>
+		/*
+			给你二叉树的根节点 root 和一个表示目标和的整数 targetSum ，判断该树中是否存在 根节点到叶子节点 的路径，
+			这条路径上所有节点值相加等于目标和 targetSum 。
+
+			输入：root = [5,4,8,11,null,13,4,7,2,null,null,null,1], targetSum = 22
+			输出：true
+		*/
+			function Node(val, left, right) {
+				this.val = val;
+				this.left = left;
+				this.right = right;
+			}
+			var nums = [3, 9, 20, null, null, 15, 7];
+			var root = new Node(nums[0], null, null);
+			var queue = [root];
+			var count = 1;
+			//通过数组构造二叉树
+			while (queue.length && count < nums.length) {
+				var temp = [];
+				for (var i = 0; i < queue.length; i++) {
+					if (nums[count]) {
+						queue[i].left = new Node(nums[count], null, null);
+						temp.push(queue[i].left);
+					}
+					count++;
+					if (count == nums.length) break;
+					if (nums[count]) {
+						queue[i].right = new Node(nums[count], null, null);
+						temp.push(queue[i].right);
+					}
+					count++;
+					if (count == nums.length) break;
+				}
+				queue = temp;
+			}
+		var hasPathSum = function (root, targetSum) {
+			if (!root) return false;
+			var dfs = (root, rest) => {
+				//路径总和sum没有说一定是正的；可以为负数，所以必须遍历到叶子节点才能结束，不能提前结束
+				if (rest === root.val && !root.left && !root.right) return true;
+				if (rest !== root.val && !root.left && !root.right) return false;
+				if (!root.left) return dfs(root.right, rest - root.val)
+				if (!root.right) return dfs(root.left, rest - root.val)
+				return dfs(root.left, rest - root.val) || dfs(root.right, rest - root.val)
+			}
+			return dfs(root, targetSum);
+
+		};
+		console.log(hasPathSum(root, 31));
+	</script>
+</body>
+
+</html>

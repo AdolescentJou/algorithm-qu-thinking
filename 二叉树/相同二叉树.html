@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+
+<body>
+	<script>
+		/*
+			给你两棵二叉树的根节点 p 和 q ，编写一个函数来检验这两棵树是否相同。
+			如果两个树在结构上相同，并且节点具有相同的值，则认为它们是相同的。
+		*/
+		function Node(val, left, right) {
+			this.val = val;
+			this.left = left;
+			this.right = right;
+		}
+		function createBST(nums) {
+			var root = new Node(nums[0], null, null);
+			var queue = [root];
+			var count = 1;
+			//通过数组构造二叉树
+			while (queue.length && count < nums.length) {
+				var temp = [];
+				for (var i = 0; i < queue.length; i++) {
+					if (nums[count]) {
+						queue[i].left = new Node(nums[count], null, null);
+						temp.push(queue[i].left);
+					}
+					count++;
+					if (count == nums.length) break;
+					if (nums[count]) {
+						queue[i].right = new Node(nums[count], null, null);
+						temp.push(queue[i].right);
+					}
+					count++;
+					if (count == nums.length) break;
+				}
+				queue = temp;
+			}
+			return root;
+		}
+		var p = createBST([1, 2, null, 4, 5, 6, 7, 8, 9]);
+		var q = createBST([1, 2, 3, 4, 5, 6, 7, 8, 9]);
+		var isSameTree = function (p, q) {
+			if (!p && !q) {
+				return true;
+			}
+			if (!(p && q)) {
+				return false;
+			}
+			console.log(p.val + "------" + q.val);
+			if (p.val != q.val) {
+				return false;
+			}
+			return isSameTree(p.left, q.left) && isSameTree(p.right, q.right);
+		};
+		console.log(isSameTree(p, q));
+	</script>
+</body>
+
+</html>

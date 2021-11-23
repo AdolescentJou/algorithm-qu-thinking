@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+
+<body>
+	<script>
+		/*
+			给定一个二叉树，判断它是否是高度平衡的二叉树。
+
+			本题中，一棵高度平衡二叉树定义为：
+
+			一个二叉树每个节点 的左右两个子树的高度差的绝对值不超过 1 。
+		*/
+		function Node(val, left, right) {
+			this.val = val;
+			this.left = left;
+			this.right = right;
+		}
+		function createBST(nums) {
+			var root = new Node(nums[0], null, null);
+			var queue = [root];
+			var count = 1;
+			//通过数组构造二叉树
+			while (queue.length && count < nums.length) {
+				var temp = [];
+				for (var i = 0; i < queue.length; i++) {
+					if (nums[count]) {
+						queue[i].left = new Node(nums[count], null, null);
+						temp.push(queue[i].left);
+					}
+					count++;
+					if (count == nums.length) break;
+					if (nums[count]) {
+						queue[i].right = new Node(nums[count], null, null);
+						temp.push(queue[i].right);
+					}
+					count++;
+					if (count == nums.length) break;
+				}
+				queue = temp;
+			}
+			return root;
+		}
+		var root = createBST([1, 2, 3, 4, 5, 6, 7, 8, 9]);
+
+		var getTreeDeep = root => {
+			if (!root) return 0;
+			return Math.max(getTreeDeep(root.left), getTreeDeep(root.right)) + 1;
+		}
+		var isBalanced = function (root) {
+			if (!root) return true;
+			var dfs = (root) => {
+				if (!root) {
+					return true;
+				}
+				if (Math.abs(getTreeDeep(root.left) - getTreeDeep(root.right)) > 1) {
+					return false;
+				}
+				return dfs(root.left) && dfs(root.right);
+			}
+			return dfs(root);
+		};
+		console.log(isBalanced(root));
+	</script>
+</body>
+
+</html>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+
+<body>
+	<script>
+		/*
+			一个机器人位于一个 m x n 网格的左上角。
+			机器人每次只能向下或者向右移动一步。机器人试图达到网格的右下角。
+			现在考虑网格中有障碍物。那么从左上角到右下角将会有多少条不同的路径
+		*/
+		function getRoute(m, n) {
+			if (m === 1 || n === 1) return 1;
+			var dp = [[]];
+			for (var i = 0; i < m; i++) {
+				
+				dp[i] = [];
+				dp[i][0] = 1;
+			}
+			for (var i = 0; i < n; i++) {
+				dp[0][i] = 1;
+			}
+			console.log(dp);
+			for (var i = 1; i < m; i++) {
+				for (var j = 1; j < n; j++) {
+					dp[i][j] = dp[i-1][j]+dp[i][j-1];
+				}
+			}
+			return dp[m-1][n-1];
+
+		}
+		console.log(getRoute(2, 2));
+		console.log(getRoute(2, 3));
+		console.log(getRoute(8, 8));
+	</script>
+</body>
+
+</html>

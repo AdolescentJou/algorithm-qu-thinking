@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+
+<body>
+	<script>
+		/*
+			给你一个只包含 '(' 和 ')' 的字符串，找出最长有效（格式正确且连续）括号子串的长度。
+			示例 1：
+
+			输入：s = "(()"
+			输出：2
+			解释：最长有效括号子串是 "()"
+		
+		*/
+		var longestValidParentheses = function (s) {
+			if (s.length < 2) {
+				return 0;
+			}
+			var arr = s.split("");
+			var dp = [0];
+			for (var i = 1; i < s.length; i++) {
+				if (s[i] == "(") {
+					dp[i] = 0;
+					continue;
+				} else {
+					if (s[i - 1] == "(") {
+						dp[i] = i - 2 > 0 && dp[i - 2] ? dp[i - 2] + 2 : 2;
+					} else {
+						if (arr[i - dp[i - 1] - 1] == "(") {
+							dp[i] = i - dp[i - 1] - 2 >= 0 ? dp[i - 1] + dp[i - dp[i - 1] - 2] + 2 : dp[i - 1] + 2;
+						} else {
+							dp[i] = 0;
+						}
+					}
+				}
+
+			}
+			return Math.max(...dp);
+		}
+		console.log(longestValidParentheses("(()"));
+
+
+
+
+
+		// var longestValidParentheses = function (s) {
+		// 	if (s.length < 2) {
+		// 		return 0;
+		// 	}
+		// 	var length = s.length;
+		// 	var dp = Array.from(new Array(length), () => new Array(length).fill(0));
+		// 	var maxLen = 0;
+		// 	var begin = 0;
+		// 	for (var i = length - 2; i >= 0; i--) {
+		// 		for (var j = i + 1; j < length; j++) {
+		// 			var len = j - i;
+		// 			if (s[i] == "(" && s[j] == ")") {
+		// 				if (len == 1) {
+		// 					dp[i][j] = 1;
+		// 					if (j - i + 1 > maxLen) {
+		// 						maxLen = j - i + 1;
+		// 					}
+		// 					continue;
+		// 				}
+		// 				if (dp[i + 1][j - 1]) {
+		// 					dp[i][j] = 1;
+		// 					if (j - i + 1 > maxLen) {
+		// 						maxLen = j - i + 1;
+		// 					}
+		// 				} else {
+		// 					for (var k = i + 1; k < j; k = k +2) {
+		// 						if (dp[i][k] && dp[k + 1][j]) {
+		// 							dp[i][j] = 1;
+		// 							if (j - i + 1 > maxLen) {
+		// 								maxLen = j - i + 1;
+		// 							}
+		// 						}
+		// 					}
+		// 				}
+
+		// 			}
+
+		// 		}
+		// 	}
+		// 	return maxLen;
+		// };
+		// console.log(longestValidParentheses("(()"));
+
+
+
+
+	</script>
+</body>
+
+</html>

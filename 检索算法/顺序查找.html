@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        var arr = [34,54,4,9,0,865,6,76,4,6,98,,24,6,7,23,4,6];
+        /*
+            顺序查找某个值
+            注意：使用这个方法来查找索引比内置的Array.indexOf要慢
+        */
+        function findItem(arr,item){
+            for(var i = 0 ;i < arr.length ;i++){
+                if(arr[i] == item){
+                    console.log("元素存在于数组中，索引为：",i);
+                }
+            }
+            console.log("元素不存在于数组中");
+        }
+        /*
+            查找最大值和最小值
+        */
+        function findMaxAndMin(arr){
+            if(arr.length == 0){
+                return;
+            }
+            var min=arr[0];
+            var max=arr[0];
+            for(var i = 1 ;i < arr.length ;i++){
+                if(min > arr[i]){
+                    min = arr[i];
+                }
+                if(max < arr[i]){
+                    max = arr[i];
+                }
+            }
+            console.log("数组最大元素为:",max);
+            console.log("数组最小元素为:",min);
+        }
+        /*
+            使用自组织数据
+
+            对于未排序的数据集来说，当被查找的数据位于数据集的起始位置时，查找是最快、最成
+            功的。通过将成功找到的元素置于数据集的起始位置，可以保证在以后的操作中该元素能
+            被更快地查找到。
+
+            所以我们将元素每一次被查找后，都向起始位置移动
+        */
+        function findItem(arr,item){
+            for(var i = 0 ;i < arr.length ;i++){
+                if(arr[i] == item){
+                    console.log("元素存在于数组中，索引为：",i);
+                    if( i > 0){
+                        [arr[i],arr[i-1]] = [arr[i-1],arr[i]];
+                    }
+                }
+            }
+            console.log("元素不存在于数组中");
+        }
+
+    </script>
+
+</body>
+</html>

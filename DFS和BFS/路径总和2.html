@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+
+<body>
+	<script>
+		/*
+			给你二叉树的根节点 root 和一个整数目标和 targetSum ，
+			找出所有 从根节点到叶子节点 路径总和等于给定目标和的路径。
+
+			输入：root = [5,4,8,11,null,13,4,7,2,null,null,5,1], targetSum = 22
+			输出：[[5,4,11,2],[5,8,4,5]]
+		*/
+		function Node(val, left, right) {
+			this.val = val;
+			this.left = left;
+			this.right = right;
+		}
+		var nums = [5, 4, 8, 11, null, 13, 4, 7, 2, null, null, 5, 1];
+		var root = new Node(nums[0], null, null);
+		var queue = [root];
+		var count = 1;
+		//通过数组构造二叉树
+		while (queue.length && count < nums.length) {
+			var temp = [];
+			for (var i = 0; i < queue.length; i++) {
+				if (nums[count]) {
+					queue[i].left = new Node(nums[count], null, null);
+					temp.push(queue[i].left);
+				}
+				count++;
+				if (count == nums.length) break;
+				if (nums[count]) {
+					queue[i].right = new Node(nums[count], null, null);
+					temp.push(queue[i].right);
+				}
+				count++;
+				if (count == nums.length) break;
+			}
+			queue = temp;
+		}
+		var pathSum = function (root, targetSum) {
+			var ans = [];
+			var dfs = (root, tempArr) => {
+				if (!root) {
+					return;
+				}
+				if (!root.left && !root.right && (sumArr(tempArr) + root.val === targetSum)) {
+					ans.push([...tempArr, root.val]);
+					return;
+				}
+				if (!root.left && !root.right && (sumArr(tempArr) + root.val !== targetSum)) {
+					return;
+				}
+				if (root.left) {
+					dfs(root.left, [...tempArr, root.val]);
+				}
+				if (root.right) {
+					dfs(root.right, [...tempArr, root.val]);
+				}
+			}
+			dfs(root, []);
+			return ans;
+		};
+		var sumArr = arr => {
+			return arr.reduce((sum, item) => item + sum, 0)
+		}
+		console.log(pathSum(root, 22));
+	</script>
+</body>
+
+</html>

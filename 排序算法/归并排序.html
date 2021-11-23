@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+	<title>Document</title>
+</head>
+
+<body>
+	<script>
+		/*
+		      归并排序的命名来自它的实现原理：把一系列排好序的子序列合并成一个大的完整有序序
+		      列。从理论上讲，这个算法很容易实现。我们需要两个排好序的子数组，然后通过比较数
+		      据大小，先从最小的数据开始插入，最后合并得到第三个数组。
+		      自顶向下 ：使用递归
+		      自底向上 ：不使用递归
+		      是一个稳定的排序算法
+		      时间复杂度：O(N*logN)
+	  
+		      说排序算法是 稳定 如果具有相等键的两个对象在排序输出中出现的顺序与它们在要排序的输入数组中出现的顺序相同。
+		      一些排序算法本质上是稳定的，如插入排序，合并排序，冒泡排序等。并且一些排序算法不是，如堆排序，快速排序等。
+	  
+		  */
+		function mergeSort(arr) {
+			let len = arr.length;
+			if (len < 2) {
+				return arr;
+			}
+			let middle = Math.floor(len / 2);
+			let leftArr = arr.slice(0, middle);
+			let rightArr = arr.slice(middle, arr.length);
+			return merge(mergeSort(leftArr), mergeSort(rightArr));
+		}
+		function merge(left, right) {
+			let result = [];
+			while (left.length && right.length) {
+				if (left[0] > right[0]) {
+					result.push(right.shift());
+				} else {
+					result.push(left.shift());
+				}
+			}
+			while (left.length) result.push(left.shift());
+			while (right.length) result.push(right.shift());
+			return result;
+		}
+		var arr = [];
+		for (var ii = 0; ii < 10; ii++) {
+			arr.push(Math.floor(Math.random() * 100));
+		}
+		console.log(mergeSort(arr))
+	</script>
+</body>
+
+</html>

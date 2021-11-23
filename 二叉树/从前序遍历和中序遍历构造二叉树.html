@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+
+<body>
+	<script>
+		/*
+			给定一棵树的前序遍历 preorder 与中序遍历  inorder。请构造二叉树并返回其根节点。
+			Input: preorder = [3,9,20,15,7], inorder = [9,3,15,20,7]
+			Output: [3,9,20,null,null,15,7]
+		*/
+		function TreeNode(val, left, right) {
+			this.val = val;
+			this.left = left;
+			this.right = right;
+		}
+		var buildTree = function (preorder, inorder) {
+			if (preorder.length == 1 || inorder.length == 1) {
+				return new TreeNode(preorder[0]);
+			}
+			if (preorder.length == 0 || inorder.length == 0) {
+				return null;
+			}
+			var root = new TreeNode(preorder[0], null, null);
+			var leftInorder = inorder.slice(0, inorder.indexOf(preorder[0]));
+			var rightInorder = inorder.slice(inorder.indexOf(preorder[0]) + 1);
+			var leftPreorder = preorder.slice(1, leftInorder.length + 1);
+			var rightPreorder = preorder.slice(1 + leftPreorder.length);
+			root.left = buildTree(leftPreorder, leftInorder);
+			root.right = buildTree(rightPreorder, rightInorder);
+			return root;
+
+		};
+		console.log(buildTree([3, 9, 20, 15, 7], [9, 3, 15, 20, 7]));
+	</script>
+</body>
+
+</html>

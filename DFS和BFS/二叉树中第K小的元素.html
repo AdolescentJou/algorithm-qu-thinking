@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+
+<body>
+	<script>
+		/*
+			给定一个二叉搜索树的根节点 root ，和一个整数 k ，
+			请你设计一个算法查找其中第 k 个最小元素（从 1 开始计数）
+
+			输入：root = [3,1,4,null,2], k = 1
+			输出：1
+		*/
+		function Node(val, left, right) {
+			this.val = val;
+			this.left = left;
+			this.right = right;
+		}
+		var nums = [3,1,4,null,2];
+		var root = new Node(nums[0], null, null);
+		var queue = [root];
+		var count = 1;
+		//通过数组构造二叉树
+		while (queue.length && count < nums.length) {
+			var temp = [];
+			for (var i = 0; i < queue.length; i++) {
+				if (nums[count]) {
+					queue[i].left = new Node(nums[count], null, null);
+					temp.push(queue[i].left);
+				}
+				count++;
+				if (count == nums.length) break;
+				if (nums[count]) {
+					queue[i].right = new Node(nums[count], null, null);
+					temp.push(queue[i].right);
+				}
+				count++;
+				if (count == nums.length) break;
+			}
+			queue = temp;
+		}
+		var kthSmallest = function (root, k) {
+			if (!root) {
+				return null;
+			}
+			var res = Infinity;
+			var ans = 0;
+			var hasLowerCount = 0;
+			var dfs = (root) => {
+				if (!root)
+					return;
+				dfs(root.left);
+				res = root.val;
+				hasLowerCount++;
+				if (hasLowerCount === k) {
+					ans = res;
+				}
+				dfs(root.right);
+			}
+			dfs(root, 0);
+			return ans;
+		};
+		console.log(kthSmallest(root, 2));
+	</script>
+</body>
+
+</html>

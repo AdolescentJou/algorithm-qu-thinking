@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+
+<body>
+	<script>
+		/*
+			一个机器人位于一个 m x n 网格的左上角 （起始点在下图中标记为“Start” ）。
+			机器人每次只能向下或者向右移动一步。机器人试图达到网格的右下角（在下图中标记为“Finish”）。
+			现在考虑网格中有障碍物。那么从左上角到右下角将会有多少条不同的路径？
+
+			输入：obstacleGrid = [[0,0,0],[0,1,0],[0,0,0]]
+			输出：2
+			解释：
+			3x3 网格的正中间有一个障碍物。
+			从左上角到右下角一共有 2 条不同的路径：
+			1. 向右 -> 向右 -> 向下 -> 向下
+			2. 向下 -> 向下 -> 向右 -> 向右
+
+			思路：和路径问题相同，每一个位置的到达路径都只能是从上面一个或者左面一个，所以每个位置到达的方式也是上面位置的上左边位置的
+			      但是如果是有障碍的话，障碍的位置到达方式就为0
+
+		*/
+		var uniquePathsWithObstacles = function (arr) {
+			var dp = [[]];
+			var isStone = 0;
+			dp[0][0] = 0;
+			//初始化x=0纵轴
+			for (var i = 0; i < arr.length; i++) {
+				dp[i] = [];
+				if (isStone == 1) {
+					dp[i][0] = 0;
+					continue;
+				}
+				if (arr[i][0] == 1) {
+					dp[i][0] = 0;
+					isStone = 1;
+					continue;
+				}
+				dp[i][0] = 1;
+			}
+			isStone = 0;
+			//初始化x=0的横轴
+			for (var i = 0; i < arr[0].length; i++) {
+				if (isStone == 1) {
+					dp[0][i] = 0;
+					continue;
+				}
+				if (arr[0][i] == 1) {
+					dp[0][i] = 0;
+					isStone = 1;
+					continue;
+				}
+				dp[0][i] = 1;
+			}
+			for (var i = 1; i < arr.length; i++) {
+				for (var j = 1; j < arr[0].length; j++) {
+					if (arr[i][j] == 1) {
+						dp[i][j] = 0;
+					} else {
+						dp[i][j] = dp[i - 1][j] + dp[i][j - 1]
+					}
+				}
+			}
+			return dp[arr.length - 1][arr[0].length - 1]
+
+		};
+		console.log(uniquePathsWithObstacles([[0,0,0],[0,1,0],[0,0,0]]));
+	</script>
+</body>
+
+</html>

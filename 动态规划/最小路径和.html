@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+
+<body>
+	<script>
+		/*
+			给定一个包含非负整数的 m x n 网格，请找出一条从左上角到右下角的路径，使得路径上的数字总和为最小。
+			说明：每次只能向下或者向右移动一步。
+
+			举例：
+			输入:
+			arr = [
+			[1,3,1],
+			[1,5,1],
+			[4,2,1]
+			]
+			输出: 7
+			解释: 因为路径 1→3→1→1→1 的总和最小。
+		*/
+		function minPathSum(arr) {
+			var wayArr = [[]];
+			//初始化第一行和第一列
+			wayArr[0][0] = arr[0][0];
+			for (var i = 1; i < arr.length; i++) {
+				wayArr[i] = [];
+				wayArr[i][0] = wayArr[i - 1][0] + arr[i][0]
+			}
+			for (var j = 1; j < arr[0].length; j++) {
+				wayArr[0][j] = wayArr[0][j - 1] + arr[0][j]
+			}
+
+			for (var i = 1; i < arr.length; i++) {
+				for (var j = 1; j < arr[i].length; j++) {
+					if (i == arr.length) {
+						wayArr[i][j] = wayArr[i][j - 1] + arr[i][j];
+						continue;
+					}
+					if (j == arr[0].length) {
+						wayArr[i][j] = wayArr[i - 1][j] + arr[i][j];
+						continue;
+					}
+					//计算到达当前位置是从行过来合适还是从列过来合适
+					wayArr[i][j] = Math.min(wayArr[i - 1][j] + arr[i][j], wayArr[i][j - 1] + arr[i][j])
+				}
+			}
+			console.log(wayArr);
+			return wayArr[arr.length - 1][arr[0].length - 1];
+		}
+		console.log(minPathSum(
+			[[1, 2, 5], [3, 2, 1]]
+		));
+	</script>
+</body>
+
+</html>

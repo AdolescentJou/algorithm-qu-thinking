@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      /*
+            我们可以将这个策略实现为二分查找算法。这个算法只对有序的数据集有效。算法描述
+            如下。
+                (1) 将数组的第一个位置设置为下边界（0）。
+                (2) 将数组最后一个元素所在的位置设置为上边界（数组的长度减 1）。
+                (3) 若下边界等于或小于上边界，则做如下操作。
+                    a. 将中点设置为（上边界加上下边界）除以 2。
+                    b. 如果中点的元素小于查询的值，则将下边界设置为中点元素所在下标加 1。
+                    c. 如果中点的元素大于查询的值，则将上边界设置为中点元素所在下标减 1。
+                    d. 否则中点元素即为要查找的数据，可以进行返回。
+        
+        */
+
+      function devideSearch(arr, item) {
+        var startPos = 0;
+        var endPos = arr.length - 1;
+        while (startPos < endPos) {
+          var midPos = Math.floor((startPos + endPos) / 2);
+          if (arr[midPos] == item) {
+            console.log("所查找的元素存在于数组中，位置为", midPos + 1);
+                /*
+                    当存在相同的元素时，二分查找找到的是最中间的元素
+                    可以添加一部分代码，用于计数
+                */
+            var pos = midPos;
+            var count = 0;
+            while(arr[pos] == item){
+                count ++;
+                pos ++;
+            }
+            pos = midPos-1;
+            while(arr[pos] == item){
+                count ++;
+                pos --;
+            }
+            console.log("该数据在数组中出现的次数为",count);
+            return;
+          }
+          if (arr[midPos] > item) {
+            endPos = midPos;
+          }
+          if (arr[midPos] < item) {
+            startPos = midPos;
+          }
+        }
+        console.log("所查找的元素不存在于数组中");
+      }
+
+      var arr = [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        12,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+      ];
+      devideSearch(arr, 12);
+    </script>
+  </body>
+</html>

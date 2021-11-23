@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+
+<body>
+	<script>
+		/*
+			二叉树的最大深度⭐
+			题目描述：给定一个二叉树，找出其最大深度。
+			二叉树的深度为根节点到最远叶子节点的最长路径上的节点数。
+			链接：力扣-二叉树的最大深度
+
+			示例：
+			给定二叉树 [3,9,20,null,null,15,7]，
+			 3
+			/ \
+		       9   20
+			  /  \
+			 15   7
+
+			返回它的最大深度 3 。
+		*/
+		function Node(data, left, right) {
+			this.data = data;
+			this.left = left;
+			this.right = right;
+		}
+		var nums = [3, 9, 20, null, null, 15, 7];
+		var root = new Node(nums[0], null, null);
+		var queue = [root];
+		var count = 1;
+		//通过数组构造二叉树
+		while (queue.length && count < nums.length) {
+			var temp = [];
+			for (var i = 0; i < queue.length; i++) {
+				queue[i].left = new Node(nums[count], null, null);
+				count++;
+				if (count == nums.length) break;
+				temp.push(queue[i].left);
+				queue[i].right = new Node(nums[count], null, null);
+				count++;
+				if (count == nums.length) break;
+				temp.push(queue[i].right);
+			}
+			queue = temp;
+		}
+		console.log(root);
+
+
+
+		var maxDepth = function (root) {
+			if (!root) return 0;
+			return Math.max(maxDepth(root.left) , maxDepth(root.right)) + 1;
+		}
+
+
+		
+		console.log(maxDepth(root));
+	</script>
+</body>

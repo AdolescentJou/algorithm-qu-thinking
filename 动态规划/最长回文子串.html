@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+
+<body>
+	<script>
+		/*
+		给你一个字符串 s，找到 s 中最长的回文子串。
+		示例 1：
+
+		输入：s = "babad"
+		输出："bab"
+		解释："aba" 同样是符合题意的答案。
+		*/
+		var longestPalindrome = function (s) {
+			if (s.length == 0) {
+				return "";
+			}
+			var length = s.length;	
+			var dp = Array.from(new Array(length), () => new Array(length).fill(0));
+			var maxStr = s[0];
+			var maxLen = 1;
+			var begin = 0;
+			for (let i = length - 1; i >= 0; i--) {
+				for (var j = i; j < length; j++) {
+					let len = j - i + 1;
+					dp[i][j] = (s[i] == s[j]) && (len <= 2 || dp[i+1][j-1])
+					if(dp[i][j] && len > maxLen){
+						maxLen = len;
+						begin = i;
+					}
+				}
+			}
+			return s.substring(begin,begin+maxLen);
+		}
+
+		console.log(longestPalindrome("bbcb"));
+
+
+
+		// var longestPalindrome = function (s) {
+		// 	if (s.length == 0) {
+		// 		return "";
+		// 	}
+		// 	var maxStr = [s[0]];
+		// 	var tempArr = [];
+		// 	for (var i = 0; i < s.length; i++) {
+		// 		var posArr = findAllPos(tempArr, s[i]);
+		// 		tempArr.push(s[i]);
+		// 		posArr.map(index => {
+		// 			if (checkIsPalindrome(tempArr.slice(index, tempArr.length))) {
+		// 				if (tempArr.slice(index, tempArr.length).length > maxStr.length) {
+		// 					maxStr = tempArr.slice(index, tempArr.length);
+		// 				}
+		// 			}
+		// 		})
+		// 	}
+		// 	return maxStr.join("");
+		// };
+		// function findAllPos(arr, c) {
+		// 	var resArr = [];
+		// 	arr.map((item, index) => {
+		// 		if (item == c) {
+		// 			resArr.push(index)
+		// 		}
+		// 	})
+		// 	return resArr;
+		// }
+
+		// function checkIsPalindrome(s) {
+		// 	var res = [];
+		// 	var initStr = s.join("");
+		// 	var length = s.length;
+		// 	for (var i = length-1; i >= 0; i--) {
+		// 		res.push(s[i]);
+		// 	}
+		// 	return res.join("") == initStr;
+		// }
+		// console.log(longestPalindrome("aaca"));
+	</script>
+</body>
+
+</html>

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+
+<body>
+	<script>
+		/*
+			给你一个二叉树的根节点 root ，按 任意顺序 ，返回所有从根节点到叶子节点的路径。
+			叶子节点 是指没有子节点的节点。
+	
+			示例 1：
+			
+			输入：root = [1,2,3,null,5]
+			输出：["1->2->5","1->3"]
+		*/
+		function Node(val, left, right) {
+			this.val = val;
+			this.left = left;
+			this.right = right;
+		}
+		var nums = [3, 9, 20, null, 1, 15, 7];
+		var root = new Node(nums[0], null, null);
+		var queue = [root];
+		var count = 1;
+		//通过数组构造二叉树
+		while (queue.length && count < nums.length) {
+			var temp = [];
+			for (var i = 0; i < queue.length; i++) {
+				if (nums[count]) {
+					queue[i].left = new Node(nums[count], null, null);
+					temp.push(queue[i].left);
+				}
+				count++;
+				if (count == nums.length) break;
+				if (nums[count]) {
+					queue[i].right = new Node(nums[count], null, null);
+					temp.push(queue[i].right);
+				}
+				count++;
+				if (count == nums.length) break;
+			}
+			queue = temp;
+		}
+		var binaryTreePaths = function (root) {
+			var ans = [];
+			var dfs = (root, res) => {
+				if (!root) {
+					return;
+				}
+				var deRes = [...res];
+				deRes.push(root.val);
+				if (!root.left && !root.right) {
+					ans.push(deRes.join("->"));
+				} else {
+					dfs(root.left, deRes);
+					dfs(root.right, deRes);
+				}
+			}
+			dfs(root, []);
+			return ans;
+		};
+		console.log(binaryTreePaths(root));
+
+		//使用队列实现广度优先搜索
+	</script>
+</body>
+
+</html>

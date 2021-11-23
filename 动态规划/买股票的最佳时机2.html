@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+
+<body>
+	<script>
+		/*
+			给定一个数组 prices ，其中 prices[i] 是一支给定股票第 i 天的价格。
+			设计一个算法来计算你所能获取的最大利润。你可以尽可能地完成更多的交易（多次买卖一支股票）。
+			注意：你不能同时参与多笔交易（你必须在再次购买前出售掉之前的股票）。
+			
+			示例 1:
+			
+			输入: prices = [7,1,5,3,6,4]
+			输出: 7
+			解释: 在第 2 天（股票价格 = 1）的时候买入，在第 3 天（股票价格 = 5）的时候卖出, 这笔交易所能获得利润 = 5-1 = 4 。
+			随后，在第 4 天（股票价格 = 3）的时候买入，在第 5 天（股票价格 = 6）的时候卖出, 这笔交易所能获得利润 = 6-3 = 3 。
+
+			思路：从第一个位置买入，然后在后面的位置进行便利
+				如果当前位置金额小于买入位置，说明亏了，从新定义买入的位置
+				如果当前金额大于买入位置，可以在此卖出
+					并且需要判断，如果上次不卖出是否可以赚的更多
+					即用当前金额，减去上次卖出的金额 和 当前金额减去最近一次买入金额相比较
+					如果大于，则说明上次卖亏了，需要重新定义买入和卖出的位置
+		*/
+		/**
+		 * @param {number[]} prices
+		 * @return {number}
+		 */
+		var maxProfit = function (prices) {
+			var buyPos = 0;
+			var salePos = 0;
+			var maxRange = 0;
+			for (var i = 1; i < prices.length; i++) {
+				if(salePos == i-1){
+					buyPos = i;
+				}
+				if (prices[i] > prices[salePos] && (prices[salePos] <= prices[buyPos])) {
+					maxRange = maxRange + prices[i] - prices[salePos];
+					salePos = i;
+					continue;
+				}
+				if (prices[i] > prices[buyPos]) {
+					maxRange = maxRange + prices[i] - prices[buyPos];
+					salePos = i;
+					continue;
+				}
+				buyPos = i;
+			}
+			return maxRange;
+		};
+		console.log(maxProfit([6,1,3,2,4,7]));
+	</script>
+</body>
+
+</html>

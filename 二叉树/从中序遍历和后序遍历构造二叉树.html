@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+
+<body>
+	<script>
+		/*
+			据一棵树的中序遍历与后序遍历构造二叉树。
+
+			注意:
+			你可以假设树中没有重复的元素。
+
+			例如，给出
+
+			中序遍历postorder = [9,3,15,20,7]
+			后序遍历 postorder = [9,15,7,20,3]
+
+			思路：找根节点，拆分左右子树，知道拆分到单个节点
+
+		*/
+		function TreeNode(val, left, right) {
+			this.val = val;
+			this.left = left;
+			this.right = right;
+		}
+		var buildTree = function (inorder, postorder) {
+			if (inorder.length == 1 || postorder.length == 1) {
+				return new TreeNode(postorder[0]);
+			}
+			if (inorder.length == 0 || postorder.length == 0) {
+				return null;
+			}
+			var root = new TreeNode(postorder[postorder.length - 1], null, null);
+			var leftInorder = inorder.slice(0, inorder.indexOf(postorder[postorder.length - 1]));
+			var rightInorder = inorder.slice(inorder.indexOf(postorder[postorder.length - 1]) + 1);
+			var leftPostorder = postorder.slice(0,leftInorder.length);
+			var rightPostorder = postorder.slice(leftPostorder.length, postorder.length-1);
+			console.log(leftInorder);
+			console.log(rightInorder);
+			console.log(leftPostorder);
+			console.log(rightPostorder);
+			root.left = buildTree(leftInorder, leftPostorder);
+			root.right = buildTree(rightInorder, rightPostorder);
+			return root;
+		};
+		console.log(buildTree([9, 3, 15, 20, 7], [9, 15, 7, 20, 3]));
+	</script>
+</body>
+
+</html>

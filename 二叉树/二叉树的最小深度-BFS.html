@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+
+<body>
+	<script>
+		/*
+			二叉树的最大深度⭐
+			题目描述：给定一个二叉树，找出其最大深度。
+			二叉树的深度为根节点到最远叶子节点的最长路径上的节点数。
+			链接：力扣-二叉树的最大深度
+
+			示例：
+			给定二叉树 [3,9,20,null,null,15,7]，
+			 3
+			/ \
+		       9   20
+			  /  \
+			 15   7
+
+			返回它的最小深度 3 。
+		*/
+		function Node(data, left, right) {
+			this.data = data;
+			this.left = left;
+			this.right = right;
+		}
+		var createBST = function (nums) {
+			var root = new Node(nums[0], null, null);
+			var queue = [root];
+			var count = 1;
+			//通过数组构造二叉树
+			while (queue.length && count < nums.length) {
+				var temp = [];
+				for (var i = 0; i < queue.length; i++) {
+					if (nums[count]) {
+						queue[i].left = new Node(nums[count], null, null);
+						temp.push(queue[i].left);
+					}
+					count++;
+					if (count == nums.length) break;
+					if (nums[count]) {
+						queue[i].right = new Node(nums[count], null, null);
+						temp.push(queue[i].right);
+					}
+					count++;
+					if (count == nums.length) break;
+				}
+				queue = temp;
+			}
+			return root;
+		}
+		//广度优先遍历
+		var minDepth = function (nums) {
+			if (nums.length == 0) return 0;
+			var root = createBST(nums);
+			console.log(root);
+			var queue = [root];
+			var ret = 0;
+			while (queue.length != 0) {
+				var temp = [];
+				ret++;
+				for (var i = 0; i < queue.length; i++) {
+					if (queue[i].left == null && !queue[i].rihgt ==null) {
+						return ret;
+					}
+					if (queue[i].left) temp.push(queue[i].left);
+					if (queue[i].right) temp.push(queue[i].right);
+
+				}
+				queue = temp;
+			}
+			return ret;
+		}
+		console.log(minDepth([2, null, 3, null, 4, null, 5, null, 6]));
+	</script>
+</body>
+
+</html>
