@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+
+<body>
+	<script>
+		/*
+			给你一个字符串 s ，其中包含字母顺序打乱的用英文单词表示的若干数字（0-9）。按 升序 返回原始的数字。
+	
+			示例 1：
+	
+			输入：s = "owoztneoer"
+			输出："012"
+		*/
+		var enNumArr = ["zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine"];
+		var originalDigits = function (s) {
+			var ans = [];
+			var dfs = (s, arr) => {
+				if (s === "") {
+					ans = arr;
+					return true;
+				}
+				for (var i = 0; i < enNumArr.length; i++) {
+					if (ans.length) {
+						return;
+					}
+					var temp = s;
+					if (hasNum(temp, enNumArr[i])) {
+						temp = removeNum(temp, enNumArr[i]);
+						dfs(temp, [...arr, i]);
+					}
+				}
+			}
+			dfs(s, []);
+			return ans.sort((a, b) => a - b).join("");
+		};
+		var hasNum = function (temp, num) {
+			return num.split("").every(item => temp.indexOf(item) !== -1);
+		}
+		var removeNum = function (temp, num) {
+			for (var i = 0; i < num.length; i++) {
+				temp = temp.slice(0, temp.indexOf(num[i])).concat(temp.slice(temp.indexOf(num[i]) + 1));
+			}
+			return temp;
+		}
+		console.log(originalDigits("zeroonetwothreefourfivesixseveneight"));
+	</script>
+</body>
+
+</html>

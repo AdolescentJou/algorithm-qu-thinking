@@ -19,7 +19,34 @@
 			输出：[["a","a","b"],["aa","b"]]
 				
 		*/
-		 
+		function partition(s) {
+			var ans = [];
+			var dp = [];
+			var dfs = (str, arr) => {
+				if (str === "") {
+					ans.push(arr);
+					return;
+				}
+				for (var i = 0; i < str.length; i++) {
+					var ss = str.slice(0, i + 1);
+					if (dp.includes(ss) || check(ss)) {
+						dp.push(ss);
+						dfs(str.slice(i + 1), [...arr, ss]);
+					}
+				}
+			}
+			dfs(s, []);
+			return ans;
+		}
+		var check = function (s) {
+			var sArr = s.split("");
+			var tempArr = [];
+			while (sArr.length != 0) {
+				tempArr.push(sArr.pop());
+			}
+			return tempArr.join("") == s;
+		}
+		console.log(partition("abb"));
 	</script>
 </body>
 

@@ -23,8 +23,8 @@
 			/  \
 			15   7
 		*/
-		function Node(data, left, right) {
-			this.data = data;
+		function Node(val, left, right) {
+			this.val = val;
 			this.left = left;
 			this.right = right;
 		}
@@ -54,7 +54,7 @@
 		console.log(root);
 		var levelOrder = function (root) {
 			if (!root) return [];
-			var res = [[root.data]];
+			var res = [[root.val]];
 			var temp = [];
 			var queue = [root];
 			while (queue.length) {
@@ -63,7 +63,7 @@
 					if (queue[i].left) temp.push(queue[i].left);
 					if (queue[i].right) temp.push(queue[i].right);
 				}
-				temp.length && res.push(temp.map(item => item.data))
+				temp.length && res.unshift(temp.map(item => item.val))
 				queue = temp;
 			}
 			return res;
